@@ -13,6 +13,7 @@ mysqlclient = "==2.1.1"
 sqlparse = "*"
 djangorestframework = "*"
 graphene-django-extras = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

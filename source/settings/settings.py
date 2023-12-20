@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    "corsheaders",
+    'django_crontab',
+    "graphene_django",
+    "HotelApp",
+    "ReservationApp",
+    "MainApp",
+    "CoreApp",
 ]
 
 MIDDLEWARE = [
@@ -74,10 +83,19 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE'    : 'django.contrib.gis.db.backends.mysql',
+        'HOST'      : os.getenv("DB_HOST", "0.0.0.0"),
+        'PORT'      : os.getenv("DB_PORT", 3306),
+        'USER'      : os.getenv("DB_USER", "root"),
+        'PASSWORD'  : os.getenv("DB_PASSWORD", "12345678"),
+        'NAME'      : os.getenv("DB_NAME", "lancrage"),
+    },
 }
 
 
@@ -116,8 +134,44 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CORS_ALLOW_ALL_ORIGINS = True
+# CSRF_TRUSTED_ORIGINS = ['https://officines.ipi-app.com']
+
+LOGIN_URL = "/auth/login/"
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'   # Engine (default)
+SESSION_COOKIE_NAME = "sessionid"                       #  Session's cookie is saved on the browser, namely: sessionId = random string (default)
+SESSION_COOKIE_PATH = "/"                               #  Session's cookie saved path (default)
+SESSION_COOKIE_DOMAIN = None                             #  Session's cookie saved domain (default)
+SESSION_COOKIE_SECURE = False                            #  Whether HTTPS is transferred for cookies (default)
+SESSION_COOKIE_HTTPONLY = True                           #  Whether the session's cookie only supports HTTP transmission (default)
+SESSION_COOKIE_AGE = 1209600                             #  Session's cookie failure date (2 weeks) (default)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False                  #  Whether to close your browser makes the session expire (default)
+SESSION_SAVE_EVERY_REQUEST = True  
+
+GRAPHENE = {
+    'SCHEMA_INDENT': 4,
+    "SCHEMA": "settings.schema.schema",
+    'MIDDLEWARE': [
+        'graphene_django_extras.ExtraGraphQLDirectiveMiddleware'
+    ]
+}
+
+CRONTAB_DJANGO_PROJECT_NAME = "lancrage"
+CRONJOBS = [
+    # ('0 10 * * 5', 'officineApp.cron.create_garde', f'>> {os.path.join(BASE_DIR, "/logs/garde.log")}'),
+   
+]
