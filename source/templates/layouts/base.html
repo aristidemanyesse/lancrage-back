@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  {% include './partials/meta.html' %}
+
+    <title>INSPINIA | Dashboard</title>
+
+</head>
+
+<body>
+
+  <div id="wrapper">
+
+    {% include './partials/sidebar.html' %}
+
+      <div id="page-wrapper" class="gray-bg">
+          <div class="row border-bottom">
+
+            {% include './partials/header.html' %}
+
+          </div>
+
+
+          {% block "body" %}
+              <h1>hello world :!!!</h1>
+          {% endblock "body" %}
+
+          
+          
+      </div>
+
+
+      <div class="footer">
+        <div class="pull-right">
+            10GB of <strong>250GB</strong> Free.
+        </div>
+        <div>
+            <strong>Copyright</strong> Example Company &copy; 2014-2017
+        </div>
+    </div>
+
+  </div>
+
+  {% include './partials/scriptjs.html' %}
+
+</body>
+
+</html>

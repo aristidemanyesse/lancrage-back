@@ -3635,12 +3635,12 @@
   function makeChangeSingleDocInEditor(cm, change, spans) {
     var doc = cm.doc, display = cm.display, from = change.from, to = change.to;
 
-    var recomputeMaxLength = false, checkWidthStart = from.line;
+    var recomputemax_length = false, checkWidthStart = from.line;
     if (!cm.options.lineWrapping) {
       checkWidthStart = lineNo(visualLine(getLine(doc, from.line)));
       doc.iter(checkWidthStart, to.line + 1, function(line) {
         if (line == display.maxLine) {
-          recomputeMaxLength = true;
+          recomputemax_length = true;
           return true;
         }
       });
@@ -3658,10 +3658,10 @@
           display.maxLine = line;
           display.maxLineLength = len;
           display.maxLineChanged = true;
-          recomputeMaxLength = false;
+          recomputemax_length = false;
         }
       });
-      if (recomputeMaxLength) cm.curOp.updateMaxLine = true;
+      if (recomputemax_length) cm.curOp.updateMaxLine = true;
     }
 
     // Adjust frontier, schedule worker

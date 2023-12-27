@@ -1,0 +1,37 @@
+{% load static %}
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> 
+                    <div class="row"> 
+                        <div class="col-xs-3 text-left"> 
+                            <img alt="image" class="img-circle" src="{% static 'dist/img/profile_small.jpg' %}" />
+                        </div>
+                        <div class="col-xs-9 text-right"> 
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Administrateur</strong> </span> 
+                        </div>
+                    </div>
+                </div>
+            </li>
+          
+            <li>
+                <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Dashboard</span></a>
+            </li>
+            <li>
+                <a href="{% url 'ReservationApp:lists' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Reservations</span></a>
+            </li>
+            <li>
+                <a href="{% url 'HotelApp:packs' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Packs</span></a>
+            </li>
+            <li>
+                <a href="{% url 'HotelApp:activities' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Activités</span></a>
+            </li>
+            <li>
+                <a href="{% url 'HotelApp:packs' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Options</span></a>
+            </li>        
+        </ul>
+
+    </div>
+</nav>

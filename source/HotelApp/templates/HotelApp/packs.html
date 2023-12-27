@@ -1,0 +1,112 @@
+{% extends "layouts/base.html" %}
+
+
+{% block "body" %}
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-10">
+      <h2>Les packs disponibles</h2>
+      <ol class="breadcrumb">
+          <li>
+              <a href="index.html">Acceuil</a>
+          </li>
+          <li class="active">
+              <strong>Les packs</strong>
+          </li>
+      </ol>
+  </div>
+  <div class="col-sm-2">
+<br>
+    <button class="btn btn-success dim" data-toggle="modal" data-target="#modifier-pack"><i class="fa fa-plus"></i> Nouveau pack</button>
+</div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    {% for pack in packs %}
+      <div class="col-md-3">
+          <div class="ibox">
+              <div class="ibox-content product-box">
+
+                  <div class="product-imitation" style="background-image: url('{{pack.image.url}}'); background-size:  100%"></div>
+                  <div class="product-desc">
+                      <span class="product-price">
+                        {{pack.price}} FCFA
+                      </span>
+                      <small class="text-muted">{{pack.nbre_lit}} lits | {{pack.modele_lit}} | {{pack.superficie}}m²</small>
+                      <a href="#" class="product-name"> {{pack.name}}</a><br>
+
+                      <div class="small m-t-xs">
+                          Many desktop publishing packages and web page editors now.
+                      </div>
+                      <div class="m-t text-righ">
+
+                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+
+</div>
+
+
+<div class="modal inmodal" id="modifier-pack" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Nouveau pack</h4>
+                <small class="font-bold">Renseigner les informations pour vaider le nouveau pack</small>
+            </div>
+            <form role="form" method="POST" class="formShamman" classname="PackForm">
+                {% csrf_token %}
+                    <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-8 form-group">
+                            <label>Nom complet du pack</label> 
+                            <input type="text" placeholder="Pack Villa" name="name" class="form-control" required>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Prix d'ouverture</label> 
+                            <input type="number" name="price" required class="form-control">
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-sm-3 form-group">
+                            <label>Nbre de lits</label> 
+                            <input type="number" value="1" name="nbre_lit" required class="form-control">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Modèle de lit</label> 
+                            <input type="text" placeholder="California King" name="modele_lit" required class="form-control">
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Superficie (m²)</label> 
+                            <input type="number" name="superficie" required class="form-control">
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-sm-4 form-group text-center">
+                           <img style="height: 100px; width: 100%; margin-bottom: 10px" src="{{element.image.url}}" class="img-thumbnail logo">
+                            <input class="hide" type="file" name="image">
+                            <button type="button" class="btn btn-sm bg-purple pull-right btn_image"><i class="fa fa-image"></i> Ajouter une image</button>
+                        </div>
+                        <div class="col-sm-8 form-group">
+                            <label>Inclus (séparez les par des points-virgules)</label>
+                            <textarea type="text" placeholder="séparez les par des points-virgules" rows=5 name="inclus" required class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Valider le formulaire</button>
+                </div>
+                </form>
+           
+        </div>
+    </div>
+</div>
+{% endblock "body" %}
+
