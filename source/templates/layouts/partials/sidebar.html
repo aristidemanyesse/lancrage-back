@@ -17,19 +17,19 @@
             </li>
           
             <li>
-                <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Dashboard</span></a>
+                <a href="{% url 'HotelApp:dashboard' %}"><i class="fa fa-dashboard"></i> <span class="nav-label">Dashboard</span></a>
             </li>
             <li>
-                <a href="{% url 'ReservationApp:lists' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Reservations</span></a>
+                <a href="{% url 'ReservationApp:lists' %}"><i class="fa fa-book"></i> <span class="nav-label">Reservations</span></a>
             </li>
             <li>
-                <a href="{% url 'HotelApp:packs' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Packs</span></a>
+                <a href="{% url 'HotelApp:packs' %}"><i class="fa fa-cubes"></i> <span class="nav-label">Packs</span></a>
             </li>
             <li>
                 <a href="{% url 'HotelApp:activities' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Activités</span></a>
             </li>
             <li>
-                <a href="{% url 'HotelApp:packs' %}"><i class="fa fa-diamond"></i> <span class="nav-label">Options</span></a>
+                <a href="{% url 'HotelApp:options' %}"><i class="fa fa-star"></i> <span class="nav-label">Options</span></a>
             </li>        
         </ul>
 

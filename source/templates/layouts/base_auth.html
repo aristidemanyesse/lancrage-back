@@ -1,0 +1,89 @@
+{% load static %} 
+{% load i18n %}      
+{% load myfilters %}
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+{% include './partials/meta.html' %}
+
+    <title>INSPINIA | Dashboard</title>
+
+</head>
+
+{% block main%}
+<body class="" style="background-size: 100%; background-image:url('{% static 'authApp/fond.png' %}') ">
+    <div style="margin-top: 5%;"></div>
+    <div class="loginColumns animated fadeInDown" style="z-index: 100000">
+
+        {% block body %}
+
+        {% endblock body %}
+
+        <hr />
+        <div class="row text-white">
+            <div class="col-md-6"> &copy; L'Ancrage, {% translate "Tous droits reservés" %}</div>
+            <div class="col-md-6 text-right">
+              <small>© 2019 - {% now "Y" %}</small>
+          </div>
+      </div>
+  </div>
+</body>
+{% endblock main%}
+
+
+
+{% include "./partials/scriptjs.html" %}
+{% include "../extra/loader.html" %}
+
+
+
+<script>
+    $(function(){
+
+        $('.reportrange span').html('{{ request.date1}}' + ' - ' + '{{ request.date2}}');
+
+
+        // selecteur des onglets item de page
+        var modul = "{{request.module_name}}"
+        var url = "{{request.page_name}}"
+            
+        if (url == "clients" || url == "client") {
+            url = "clients";
+        }
+    
+        $("nav ul.metismenu li").removeClass('active');
+        $("nav ul.metismenu li").each(function (index, el) {
+            if ($(this).attr("id") == url) {
+                $(this).addClass("active")
+                $(this).parent("ul").addClass("in");
+                $(this).parent("ul").parent("li.groupe").addClass("active");
+            }
+        });
+    
+        $("a.onglets").each(function () {
+            if ($(this).attr("id") == "onglet-" + modul) {
+                $("a.onglets").removeClass("active btn-warning")
+                $("a.onglets").addClass("btn-white");
+                $(this).addClass("active btn-warning").removeClass("btn-white");
+            }
+        })
+        
+    })
+    </script>
+
+</html>
+
+
+
+
+{% block style %}
+
+{% endblock style %}
+
+
+{% block script %}
+
+{% endblock script %}

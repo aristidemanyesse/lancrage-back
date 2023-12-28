@@ -1,0 +1,225 @@
+{% extends "layouts/base.html" %}
+
+
+{% block "body" %}
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-8">
+      <h2>Les options disponibles</h2>
+      <ol class="breadcrumb">
+          <li>
+              <a href="index.html">Acceuil</a>
+          </li>
+          <li class="active">
+              <strong>Les options</strong>
+          </li>
+      </ol>
+  </div>
+  <div class="col-sm-4 text-right">
+<br>
+    <button class="btn btn-primary dim" data-toggle="modal" data-target="#new-option"><i class="fa fa-plus"></i> Nouvelle Option</button>
+    <button class="btn btn-success dim" data-toggle="modal" data-target="#new-category"><i class="fa fa-plus"></i> Nouvelle catégorie</button>
+</div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    
+  <div class="row">
+    {% for category in categories %}
+            <div class="col-lg-3">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <h5>{{category.name}}</h5>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <button onclick="delete_password('CategoryOption', '{{category.id}}')" class="btn btn-danger btn-xs" style="margin-left: -5px;"><i class="fa fa-close"></i></button>
+                                <button data-toggle="modal" data-target="#modifier-categorie-{{category.id}}" class="btn btn-primary btn-xs" style="margin-left: -5px;"><i class="fa fa-pencil"></i></button>
+                            </div>
+                        </div>
+                        <table class="table table-stripped small m-t-md">
+                            <tbody>
+                                {% for item in category.categorie_option.filter %}
+                                    <tr>
+                                        <td>{{item.name}}</td>
+                                        <td><i class="fa fa-edit text-navy" style="cursor:pointer" data-toggle="modal" data-target="#modifier-option-{{item.id}}"></i></td>
+                                        <td><i class="fa fa-close text-danger" onclick="delete_password('Option', '{{option.id}}')" style="cursor:pointer"></i></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+      {% endfor %}
+  </div>
+
+</div>
+
+
+
+<div class="modal inmodal" id="new-category" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Nouvelle catégorie</h4>
+                <small class="font-bold">Renseigner les informations pour vaider la nouvelle catégorie</small>
+            </div>
+            <form role="form" method="POST" class="formShamman" classname="CategoryOptionForm">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label>Nom complet de l'activite</label> 
+                            <input type="text" placeholder="Balade" name="name" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Valider le formulaire</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal inmodal" id="new-option" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Nouvelle option</h4>
+                <small class="font-bold">Renseigner les informations pour vaider la nouvelle option</small>
+            </div>
+            <form role="form" method="POST" class="formShamman" classname="OptionForm">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label>Nom complet de l'activite</label> 
+                            <input type="text" placeholder="Balade" name="name" class="form-control" required>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Nom complet de l'activite</label> 
+                            {% include 'extra/select.html' with name='categorie' instances=categories  %}   
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Valider le formulaire</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal inmodal" id="new-category" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Nouvelle catégorie</h4>
+                <small class="font-bold">Renseigner les informations pour vaider la nouvelle catégorie</small>
+            </div>
+            <form role="form" method="POST" class="formShamman" classname="CategoryOptionForm">
+                {% csrf_token %}
+                    <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label>Nom complet de l'activite</label> 
+                            <input type="text" placeholder="Balade" name="name" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Valider le formulaire</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% for categorie in categories %}
+    <div class="modal inmodal" id="modifier-categorie-{{categorie.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Mise à jour de la categorie</h4>
+                    <small class="font-bold">Renseigner les informations pour vaider la categorie</small>
+                </div>
+                <form role="form" method="POST" class="formShamman" classname="CategoryOptionForm">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label>Nom complet de l'activite</label> 
+                                <input type="text" placeholder="Balade" name="name" value="{{categorie.name}}" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="id" value="{{categorie.id}}">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Valider le formulaire</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+{% for option in options %}
+    <div class="modal inmodal" id="modifier-option-{{option.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Mise à jour de l'option</h4>
+                    <small class="font-bold">Renseigner les informations pour vaider l'option</small>
+                </div>
+                <form role="form" method="POST" class="formShamman" classname="OptionForm">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Nom complet de l'activite</label> 
+                                <input type="text" placeholder="Balade" name="name" value="{{option.name}}" class="form-control" required>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Nom complet de l'activite</label> 
+                                {% include 'extra/select.html' with name='categorie' instances=categories obj=option.categorie %}   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="id" value="{{option.id}}">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Valider le formulaire</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+{% endblock "body" %}
+

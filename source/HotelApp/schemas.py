@@ -2,10 +2,10 @@ from graphene_django_extras import  DjangoSerializerType
 from .serializers import *
 
 
-class ModePredictionType(DjangoSerializerType):
+class PackType(DjangoSerializerType):
     class Meta:
-        serializer_class = ModePredictionSerializer
-        description = " Type definition for a single ModePrediction "
+        serializer_class = PackSerializer
+        description = " Type definition for a single Pack "
         filter_fields = {
             "id": ("exact", ),
             "deleted": ("exact", ),
@@ -14,41 +14,35 @@ class ModePredictionType(DjangoSerializerType):
 
 
 
-class TypePredictionType(DjangoSerializerType):
+class ActivityType(DjangoSerializerType):
     class Meta:
-        serializer_class = TypePredictionSerializer
-        description = " Type definition for a single TypePrediction "
+        serializer_class = ActivitySerializer
+        description = " Type definition for a single Activity "
         filter_fields = {
             "id": ("exact", ),
             "deleted": ("exact", ),
             "name": ("exact",),
-            "code": ("exact", ),
         }
 
 
-class PredictionType(DjangoSerializerType):
+class CategoryOptionType(DjangoSerializerType):
     class Meta:
-        serializer_class = PredictionSerializer
-        description = " Type definition for a single Prediction "
+        serializer_class = CategoryOptionSerializer
+        description = " Type definition for a single CategoryOption "
         filter_fields = {
             "id": ("exact", ),
             "deleted": ("exact", ),
-            "mode__id": ("exact",),
-            "type__id": ("exact",),
-            "match__id": ("exact",),
-            "pct": ("exact", ),
-            "is_checked": ("exact", ),
+            "name": ("exact",),
         }
 
 
-class PredictionScoreType(DjangoSerializerType):
+class OptionType(DjangoSerializerType):
     class Meta:
-        serializer_class = PredictionScoreSerializer
-        description = " Type definition for a single PredictionScore "
+        serializer_class = OptionSerializer
+        description = " Type definition for a single Option "
         filter_fields = {
             "id": ("exact", ),
             "deleted": ("exact", ),
-            "match__id": ("exact",),
-            "pct": ("exact", ),
-            "is_checked": ("exact", ),
+            "categorie__id": ("exact",),
+            "name": ("exact", ),
         }

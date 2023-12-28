@@ -3,9 +3,9 @@ from .models import *
 from rest_framework.serializers import ModelSerializer
 
 
-class ChambreSerializer(ModelSerializer):
+class PackSerializer(ModelSerializer):
     class Meta:
-        model = Chambre
+        model = Pack
         fields = '__all__'
 
 class ActivitySerializer(ModelSerializer):
@@ -13,7 +13,13 @@ class ActivitySerializer(ModelSerializer):
         model = Activity
         fields = '__all__'
 
-class PredictionSerializer(ModelSerializer):
+class CategoryOptionSerializer(ModelSerializer):
+    class Meta:
+        model = CategoryOption
+        fields = '__all__'
+
+
+class OptionSerializer(ModelSerializer):
     class Meta:
         model = Option
         fields = '__all__'

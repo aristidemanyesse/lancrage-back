@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "graphene_django",
     "HotelApp",
     "ReservationApp",
-    "MainApp",
+    "AuthApp",
     "CoreApp",
 ]
 
@@ -56,6 +56,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'CoreApp.middleware.LockoutMiddleware',
+    'CoreApp.middleware.AccessCheckMiddleware',
 ]
 
 ROOT_URLCONF = 'settings.urls'

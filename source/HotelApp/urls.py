@@ -7,6 +7,8 @@ from .views import *
 
 app_name = "HotelApp"
 urlpatterns = [
+    path('', dashboard, name="dashboard"),
     path('packs/', packs, name="packs"),
     path('activities/', activities, name="activities"),
+    path('options/', options, name="options"),
 ]

@@ -3,22 +3,22 @@ from .schemas import *
 import graphene
 
 
-class predictionAppQuery(object):
-    search_mode_prediction            = ModePredictionType.ListField(action=graphene.String(default_value="search_mode_prediction"))
-    search_type_prediction            = TypePredictionType.ListField(action=graphene.String(default_value="search_officine_mode_prediction"))
-    search_prediction                 = PredictionType.ListField(action=graphene.String(default_value="search_ligne_mode_prediction"))
-    search_prediction_score           = PredictionScoreType.ListField(action=graphene.String(default_value="search_reponse"))
+class HotelAppQuery(object):
+    search_pack               = PackType.ListField(action=graphene.String(default_value="search_pack"))
+    search_activity           = ActivityType.ListField(action=graphene.String(default_value="search_officine_pack"))
+    search_category_option    = CategoryOptionType.ListField(action=graphene.String(default_value="search_ligne_pack"))
+    search_option             = OptionType.ListField(action=graphene.String(default_value="search_reponse"))
 
     
-class predictionAppMutation(object)   : 
-    create_mode_prediction            = ModePredictionType.CreateField()
-    update_mode_prediction            = ModePredictionType.UpdateField()
+class HotelAppMutation(object)   : 
+    create_pack               = PackType.CreateField()
+    update_pack               = PackType.UpdateField()
     
-    create_type_prediction            = TypePredictionType.CreateField()
-    update_type_prediction            = TypePredictionType.UpdateField()
+    create_activity           = ActivityType.CreateField()
+    update_activity           = ActivityType.UpdateField()
     
-    create_prediction                 = PredictionType.CreateField()
-    update_prediction                 = PredictionType.UpdateField()
+    create_category_option    = CategoryOptionType.CreateField()
+    update_category_option    = CategoryOptionType.UpdateField()
     
-    create_prediction_score           = PredictionScoreType.CreateField()
-    update_prediction_score           = PredictionScoreType.UpdateField()
+    create_option             = OptionType.CreateField()
+    update_option             = OptionType.UpdateField()

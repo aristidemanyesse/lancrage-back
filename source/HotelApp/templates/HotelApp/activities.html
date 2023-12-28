@@ -3,55 +3,175 @@
 
 {% block "body" %}
 <div class="row wrapper border-bottom white-bg page-heading">
-  <div class="col-lg-10">
-      <h2>E-commerce grid</h2>
+  <div class="col-sm-10">
+      <h2>Les activités disponibles</h2>
       <ol class="breadcrumb">
           <li>
-              <a href="index.html">Home</a>
-          </li>
-          <li>
-              <a>E-commerce</a>
+              <a href="index.html">Acceuil</a>
           </li>
           <li class="active">
-              <strong>Products grid</strong>
+              <strong>Les activités</strong>
           </li>
       </ol>
   </div>
- 
+  <div class="col-sm-2">
+<br>
+    <button class="btn btn-success dim" data-toggle="modal" data-target="#new-activite"><i class="fa fa-plus"></i> Nouvelle activité</button>
+</div>
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
-      <div class="col-md-3">
+    {% for activite in activites %}
+      <div class="col-md-3 item">
           <div class="ibox">
               <div class="ibox-content product-box">
 
-                  <div class="product-imitation">
-                      [ INFO ]
-                  </div>
+                  <div class="product-imitation" style="background-image: url('{{activite.image.url}}'); background-size:  100%"></div>
                   <div class="product-desc">
                       <span class="product-price">
-                          $10
+                        {{activite.public_price}} FCFA | {{activite.private_price}} FCFA
                       </span>
-                      <small class="text-muted">Category</small>
-                      <a href="#" class="product-name"> Product</a>
+                      <small class="text-muted">{{activite.nbre_lit}} </small>
+                      <a href="#" class="product-name"> {{activite.name}}</a>
 
+                      <p>{{activite.description}}</p>
 
-
-                      <div class="small m-t-xs">
-                          Many desktop publishing packages and web page editors now.
+                      <div class="small m-t-xs row">
+                            {% for item in activite.lesprerequis %}
+                                <div class="col-sm-6">
+                                    <li>{{item}}</li>
+                                </div>
+                            {% endfor %}
                       </div>
                       <div class="m-t text-righ">
 
-                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                          <a href="#"  data-toggle="modal" data-target="#modifier-activite-{{activite.id}}" class="btn btn-xs btn-outline btn-primary">Modifier l'activite <i class="fa fa-long-arrow-right"></i> </a>
+                          <a href="#" onclick="delete_password('Activity', '{{activite.id}}')" class="btn btn-xs btn-outline btn-danger ">Supprimer <i class="fa fa-trash"></i> </a>
+
                       </div>
                   </div>
               </div>
           </div>
       </div>
-      
+      {% endfor %}
   </div>
 
 </div>
+
+
+
+<div class="modal inmodal" id="new-activite" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Nouvelle activité</h4>
+                <small class="font-bold">Renseigner les informations pour vaider la nouvelle activité</small>
+            </div>
+            <form role="form" method="POST" class="formShamman" classname="ActivityForm">
+                {% csrf_token %}
+                    <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label>Nom complet de l'activite</label> 
+                            <input type="text" placeholder="Balalde" name="name" class="form-control" required>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Prix en privé</label> 
+                            <input type="number" name="private_price" required class="form-control">
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Prix en groupe</label> 
+                            <input type="number" name="public_price" required class="form-control">
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label>Description de l'activité</label>
+                            <textarea type="text" placeholder="séparez les par des points-virgules" rows=5 name="description" required class="form-control"></textarea>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-sm-4 form-group text-center">
+                           <img style="height: 100px; width: 100%; margin-bottom: 10px" src="{{element.image.url}}" class="img-thumbnail logo">
+                            <input class="hide" type="file" name="image">
+                            <button type="button" class="btn btn-sm bg-purple pull-right btn_image"><i class="fa fa-image"></i> Ajouter une image</button>
+                        </div>
+                        <div class="col-sm-8 form-group">
+                            <label>Les préréquis (séparez les par des points-virgules)</label>
+                            <textarea type="text" placeholder="séparez les par des points-virgules" rows=5 name="prerequis" required class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Valider le formulaire</button>
+                </div>
+                </form>
+           
+        </div>
+    </div>
+</div>
+
+
+
+
+    {% for activite in activites %}
+        <div class="modal inmodal" id="modifier-activite-{{activite.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content animated flipInY">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Modification de l'activite</h4>
+                        <small class="font-bold">Renseigner les informations pour vaider le les changements de l'activite</small>
+                    </div>
+                    <form role="form" method="POST" class="formShamman" classname="ActivityForm">
+                        {% csrf_token %}
+                            <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label>Nom complet de l'ctivite</label> 
+                                    <input type="text" placeholder="activite Villa"  value="{{activite.name}}" name="name" class="form-control" required>
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label>Prix en privé</label> 
+                                    <input type="number" name="private_price" value="{{activite.private_price}}" required class="form-control">
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label>Prix en groupe</label> 
+                                    <input type="number" name="public_price" value="{{activite.public_price}}" required class="form-control">
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <label>Description de l'activité</label>
+                                    <textarea type="text" placeholder="séparez les par des points-virgules" rows=5 name="description" required class="form-control">{{activite.description}}</textarea>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-sm-4 form-group text-center">
+                                 <img style="height: 100px; width: 100%; margin-bottom: 10px" src="{{activite.image.url}}" class="img-thumbnail logo">
+                                    <input class="hide" type="file" name="image">
+                                    <button type="button" class="btn btn-sm bg-purple pull-right btn_image"><i class="fa fa-image"></i> Ajouter une image</button>
+                                </div>
+                                <div class="col-sm-8 form-group">
+                                    <label>Préréquis (séparez les par des points-virgules)</label>
+                                    <textarea type="text" placeholder="séparez les par des points-virgules" rows=5 name="prerequis" required class="form-control">{{activite.prerequis}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="id" value="{{activite.id}}">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Mettre à jour le activite</button>
+                        </div>
+                    </form>
+                
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
 {% endblock "body" %}
 
